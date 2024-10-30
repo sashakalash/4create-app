@@ -1,13 +1,23 @@
+import { UserService } from '@/components/table-component/state/user.service';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { TableComponent } from './components/table-component/table-page/table.component';
+import { UserModalComponent } from './components/modal/component/user-modal.component';
+
+const USERS = [
+  { id: 1, name: 'User1', active: true },
+  { id: 2, name: 'User2', active: false },
+  { id: 3, name: 'User3', active: true },
+];
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss'],
+  standalone: true,
+  imports: [TableComponent, UserModalComponent],
 })
 export class AppComponent {
-  title = '4create-test';
+  constructor(private userService: UserService) {
+    this.userService.setInitialUsers(USERS);
+  }
 }

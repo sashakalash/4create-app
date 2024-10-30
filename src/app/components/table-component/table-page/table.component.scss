@@ -1,0 +1,79 @@
+$primary-color: #4CAF50;
+$secondary-color: #d80707;;
+$background-color: #f9f9f9;
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+
+    h1 {
+        text-align: center;
+    }
+
+    button {
+        background-color: $primary-color;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+
+        &.status.active {
+          background-color: $secondary-color;
+        }
+
+        &:hover {
+            background-color: darken($primary-color, 10%);
+        }
+        &.disabled {
+          cursor: unset;
+          background-color: grey;
+          &:hover {
+            background-color: grey;
+          }
+        }
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: $primary-color;
+            color: white;
+        }
+    }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            position: relative;
+
+            .close {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+            }
+        }
+    }
+}

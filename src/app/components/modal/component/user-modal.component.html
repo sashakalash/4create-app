@@ -1,0 +1,50 @@
+<div class="modal-overlay"
+     #modalOverlay
+     [class.active]="isModalOpen$ | async">
+  <div class="modal"
+       #modal>
+    <div class="modal-header">
+      <h2>Add new user</h2>
+      <button class="close-button"
+              id="closeModal"
+              (click)="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="userForm"
+            (ngSubmit)="addUser()"
+            (keydown.enter)="addUser()">
+        <div class="control">
+          <label for="name">Name:</label>
+          <div class="input-wrapper">
+            <input type="text"
+                   formControlName="name"
+                   required
+                   [class.has-error]="userForm.get('name')?.invalid && (userForm.get('name')?.dirty || userForm.get('name')?.touched)">
+            <div *ngIf="userForm.get('name')?.invalid && (userForm.get('name')?.dirty || userForm.get('name')?.touched)"
+                 class="error">
+              <small *ngIf="userForm.get('name')?.errors?.required">Name is required.</small>
+              <small *ngIf="userForm.get('name')?.errors?.userTaken">Name is already exist.</small>
+            </div>
+          </div>
+        </div>
+        <div class="control">
+          <label for="active">Active:</label>
+          <div class="input-wrapper">
+            <input type="checkbox"
+                   formControlName="active">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="button secondary"
+                  id="cancelButton"
+                  (click)="closeModal()">Cancel</button>
+          <button class="button primary"
+                  id="confirmButton"
+                  type="submit"
+                  [class.disabled]="!userForm.valid"
+                  (click)="addUser()">Confirm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+.container {
+  max-width: 600px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+}
+.container h1 {
+  text-align: center;
+}
+.container button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+.container button.status.active {
+  background-color: #d80707;
+}
+.container button:hover {
+  background-color: #3d8b40;
+}
+.container button.disabled {
+  cursor: unset;
+  background-color: grey;
+}
+.container button.disabled:hover {
+  background-color: grey;
+}
+.container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.container table th, .container table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+.container table th {
+  background-color: #4CAF50;
+  color: white;
+}
+.container .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container .modal .modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+}
+.container .modal .modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}/*# sourceMappingURL=table.component.css.map */

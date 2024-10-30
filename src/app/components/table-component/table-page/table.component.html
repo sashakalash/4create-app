@@ -1,0 +1,27 @@
+<div class="container">
+  <h1>User Management</h1>
+  <button (click)="openModal()"
+          [class.disabled]="isDisabled$ | async">Add User</button>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Active</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users$ | async">
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>
+          <button (click)="toggleActive(user)"
+                  class="status"
+                  [class.active]="user.active">
+            {{ user.active ? 'Deactivate' : 'Activate' }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
