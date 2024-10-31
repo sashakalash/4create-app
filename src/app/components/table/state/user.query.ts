@@ -14,13 +14,14 @@ export interface UsersState<Entity = IUser, IDType = number> {
 @Injectable({ providedIn: 'root' })
 export class UserQuery extends QueryEntity<UsersState> {
   users$ = this.selectAll();
-  isAddingUsersAllowed$ = this.selectAll().pipe(
+  isAddingUsersAllowed$ = this.users$.pipe(
     map(
       (users) =>
         users.length < 5 &&
-        this.getCount(({ active }) => !active) === users.length,
+        this.getCount(({ active }) => active) === users.length,
     ),
   );
+  loading$ = this.select('loading');
 
   constructor(protected override store: UserStore) {
     super(store);

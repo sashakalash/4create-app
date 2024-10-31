@@ -1,5 +1,6 @@
+import { UserService } from '@/components/table/state/user.service';
 import { IUser } from '@/interfaces/IUser.interface';
-import { UserQuery } from './../components/table-component/state/user.query';
+import { Injectable } from '@angular/core';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -12,33 +13,38 @@ import {
   delay,
   catchError,
   debounceTime,
+  take,
 } from 'rxjs/operators';
 
-function isUsernameUnique(
-  name: string,
-  existedUsers: IUser[],
-): Observable<boolean> {
-  return of(
-    existedUsers.find((u) => u.name.toLowerCase() === name.toLowerCase()),
-  ).pipe(
-    delay(1000),
-    switchMap((user) => of(!!user)),
-  );
-}
+@Injectable({
+  providedIn: 'root',
+})
+export class NameUniquenessValidator {
+  constructor(private userService: UserService) {}
 
-export function nameUniqueValidator(userQuery: UserQuery): AsyncValidatorFn {
-  return (control: AbstractControl): Observable<ValidationErrors | null> => {
-    if (!control.value || control.pristine) {
-      return of(null);
-    }
-    return of(control.value).pipe(
-      debounceTime(500),
-      switchMap((value) =>
-        isUsernameUnique(value, userQuery.getAll()).pipe(
-          map((isTaken: boolean) => (isTaken ? { userTaken: true } : null)),
-          catchError(() => of(null)),
+  validate(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      if (!control.value || control.pristine) {
+        return of(null);
+      }
+      return this.userService.getAllUsers().pipe(
+        debounceTime(500),
+        take(1),
+        delay(3000), //backend request simulation
+        map((users: IUser[]) =>
+          users.find(
+            (u) => u.name.toLowerCase() === control?.value?.toLowerCase(),
+          ),
         ),
-      ),
-    );
-  };
+        switchMap((isTaken: IUser | undefined) => {
+          this.userService.unsetLoading();
+          return isTaken ? of({ userTaken: true }) : of(null);
+        }),
+        catchError(() => {
+          this.userService.unsetLoading();
+          return of(null);
+        }),
+      );
+    };
+  }
 }

@@ -26,12 +26,12 @@
               <small *ngIf="userForm.get('name')?.errors?.userTaken">Name is already exist.</small>
             </div>
           </div>
+          <app-spinner *ngIf="loading$ | async"></app-spinner>
         </div>
         <div class="control">
           <label for="active">Active:</label>
           <div class="input-wrapper">
-            <input type="checkbox"
-                   formControlName="active">
+            <app-toggle formControlName="active"></app-toggle>
           </div>
         </div>
         <div class="modal-footer">

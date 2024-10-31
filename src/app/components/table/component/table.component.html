@@ -15,13 +15,12 @@
         <td>{{ user.id }}</td>
         <td>{{ user.name }}</td>
         <td>
-          <button (click)="toggleActive(user)"
-                  class="status"
-                  [class.active]="user.active">
-            {{ user.active ? 'Deactivate' : 'Activate' }}
-          </button>
+          <app-toggle [ngModel]="user.active"
+                      (ngModelChange)="toggleActive(user)"></app-toggle>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<user-modal></user-modal>

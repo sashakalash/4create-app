@@ -1,4 +1,3 @@
-import { UserQuery } from './../../table-component/state/user.query';
 import { fromEvent, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
@@ -11,20 +10,30 @@ import {
 } from '@angular/forms';
 import { ModalService } from '../state/modal.service';
 import { createUser, IUser } from '@/interfaces/IUser.interface';
-import { UserService } from '@/components/table-component/state/user.service';
 import { ModalQuery } from '../state/modal.query';
-import { nameUniqueValidator } from '@/services/user-name-validator';
+import { NameUniquenessValidator } from '@/services/user-name-validator';
+import { UserQuery } from '@/components/table/state/user.query';
+import { UserService } from '@/components/table/state/user.service';
+import { ToggleComponent } from '@/components/toggle/toggle-component.component';
+import { SpinnerComponent } from '@/components/spinner/spinner.component';
 
 @Component({
   selector: 'user-modal',
   templateUrl: './user-modal.component.html',
   styleUrls: ['./user-modal.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ToggleComponent,
+    SpinnerComponent,
+  ],
 })
 export class UserModalComponent implements AfterViewInit {
   userForm: FormGroup;
   isModalOpen$: Observable<boolean> = this.modalQuery.isModalOpen$;
+  loading$ = this.userQuery.loading$;
   @ViewChild('modalOverlay') modalOverlayRef!: ElementRef;
   @ViewChild('modal') modalRef!: ElementRef;
 
@@ -34,9 +43,10 @@ export class UserModalComponent implements AfterViewInit {
     private modalService: ModalService,
     private userService: UserService,
     private userQuery: UserQuery,
+    private nameUniquenessValidator: NameUniquenessValidator,
   ) {
     this.userForm = this.fb.group({
-      name: ['', [Validators.required], [nameUniqueValidator(this.userQuery)]],
+      name: ['', [Validators.required], [nameUniquenessValidator.validate()]],
       active: [false],
     });
   }
@@ -48,6 +58,8 @@ export class UserModalComponent implements AfterViewInit {
     fromEvent(this.modalRef.nativeElement, 'click').subscribe((event) => {
       (event as Event).stopPropagation();
     });
+    this.userForm.valueChanges.subscribe(() => console.log(this.userForm))
+
   }
 
   submit() {
@@ -62,7 +74,7 @@ export class UserModalComponent implements AfterViewInit {
 
   closeModal() {
     this.close();
-    this.userForm.reset({ active: false });
+    this.userForm.reset({ emitEvent: false });
   }
 
   addUser() {
