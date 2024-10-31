@@ -1,8 +1,5 @@
 
-> **Advice:** All changes related to the current task are in the `table-feature` branch and are awaiting review and merging in **Pull Request #1**.
->
-> Keep an eye on the progress of this pull request to stay updated on new features and improvements to be added to the main branch.
-
+> **Please pay attention:** All changes related to the current task are in the `table-feature` branch and are awaiting review and merging in **Pull Request #1**.
 
 # User Management App
 
