@@ -1,6 +1,8 @@
 $primary-color: #4caf50;
 $secondary-color: #d80707;
 $background-color: #f9f9f9;
+$table-header-color: #cecece;
+$button-color: #2664de;
 
 .container {
   max-width: 600px;
@@ -12,7 +14,7 @@ $background-color: #f9f9f9;
   }
 
   button {
-    background-color: $primary-color;
+    background-color: $button-color;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -48,8 +50,8 @@ $background-color: #f9f9f9;
     }
 
     th {
-      background-color: $primary-color;
-      color: white;
+      background-color: $table-header-color;
+      color: black;
     }
 
     tr td:nth-child(2) {
