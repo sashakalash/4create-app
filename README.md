@@ -1,6 +1,3 @@
-
-> **Please pay attention:** All changes related to the current task are in the `table-feature` branch and are awaiting review and merging in **Pull Request #1**.
-
 # User Management App
 
 ## Overview
